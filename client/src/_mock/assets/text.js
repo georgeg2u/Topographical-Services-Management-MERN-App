@@ -77,3 +77,29 @@ export const _answers = [
   "Pentru a adăuga un nou serviciu, trebuie să fiți autentificați ca prestator de servicii. Asigurați-vă că nu sunteți autentificat cu cont de client, iar în cazul în care sunteți, delogați-vă și autentificați-vă ca prestator.",
   "Accesați secțiunea Contact sau scrieți-ne un mail la adresa contact@cadastru.ro",
 ];
+
+export const _office = [{
+  phoneNumber: '0722 200 201',
+  email: 'contact@cadastru.ro',
+  latlng: [44.4260987, 26.1194606],
+  address: 'București, Sector 3, Bvd. Unirii, Nr. 1',
+}];
+
+
+export const STEPS = [
+  {
+    title: 'Creează-ți cont',
+    description: 'Accesează secțiunea Înregistrare și fă-ți un cont de utilizator.',
+    icon: '/assets/icons/ic_resume_job.svg',
+  },
+  {
+    title: 'Vizualizează ofertele',
+    description: 'Caută serviciul de care ai nevoie în lista de oferte a partenerilor.',
+    icon: '/assets/icons/ic_resume_job.svg',
+  },
+  {
+    title: 'Alege serviciul',
+    description: 'Selectează serviciul dorit și începe colaborarea cu un prestator de servicii funciare.',
+    icon: '/assets/icons/ic_search.svg',
+  },
+];

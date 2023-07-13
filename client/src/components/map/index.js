@@ -34,7 +34,7 @@ export default function ContactMap({ offices, companyName, sx, ...other }) {
       <GoogleMapReact
         bootstrapURLKeys={{ key: GOOGLE_MAP_API }}
         center={centerMap}
-        zoom={10}
+        zoom={14}
         options={{
           styles: mapStyle,
           disableDefaultUI: true,

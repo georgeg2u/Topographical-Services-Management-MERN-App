@@ -2,13 +2,21 @@ import React, {useState} from "react";
 import {Link} from "react-router-dom";
 import axios from "axios";
 import styles from "./Login.module.css";
+import {IconButton, TextField} from "@mui/material";
+import {Visibility, VisibilityOff} from "@mui/icons-material";
+import {ToastContainer, toast} from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
   const [data, setData] = useState({
     email: "",
     password: "",
   });
-  const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleTogglePasswordVisibility = () => {
+    setShowPassword(prevState => !prevState);
+  };
 
   const handleChange = ({currentTarget: input}) => {
     setData({...data, [input.name]: input.value});
@@ -19,15 +27,21 @@ const Login = () => {
     try {
       const url = "http://localhost:8080/api/auth";
       const {data: res} = await axios.post(url, data);
-      localStorage.setItem("token", res.data);
-      window.location = "/";
+      if (res.data.role === "customer") {
+        localStorage.setItem("token", res.data.token);
+        window.location = "/";
+      } else if (res.data.role === "company") {
+        localStorage.setItem("company-token", res.data.token);
+        window.location = "/company/";
+        console.log(res.data);
+      }
     } catch (error) {
       if (
         error.response &&
         error.response.status >= 400 &&
         error.response.status <= 500
       ) {
-        setError(error.response.data.message);
+        toast.error(error.response.data.message);
       }
     }
   };
@@ -38,25 +52,34 @@ const Login = () => {
         <div className={styles.left}>
           <form className={styles.form_container} onSubmit={handleSubmit}>
             <h1>Conectează-te!</h1>
-            <input
+            <TextField
               type="email"
-              placeholder="Email"
+              label="Email"
               name="email"
               onChange={handleChange}
               value={data.email}
               required
               className={styles.input}
+              sx={{mt: "5px"}}
             />
-            <input
-              type="password"
-              placeholder="Parola"
+            <TextField
+              type={showPassword ? "text" : "password"}
+              label="Parola"
               name="password"
               onChange={handleChange}
               value={data.password}
               required
               className={styles.input}
+              sx={{mt: "5px"}}
+              InputProps={{
+                endAdornment: (
+                  <IconButton onClick={handleTogglePasswordVisibility}>
+                    {showPassword ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                ),
+              }}
             />
-            {error && <div className={styles.error_msg}>{error}</div>}
+
             <button type="submit" className={styles.green_btn}>
               Conectare
             </button>
@@ -71,6 +94,7 @@ const Login = () => {
           </Link>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

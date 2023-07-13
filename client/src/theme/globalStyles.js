@@ -44,6 +44,7 @@ export default function GlobalStyles() {
           display: 'block',
           maxWidth: '100%',
         },
+        
       }}
     />
   );

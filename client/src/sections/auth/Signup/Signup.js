@@ -2,6 +2,8 @@ import React, {useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import axios from "axios";
 import styles from "./Signup.module.css";
+import {ToastContainer, toast} from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Signup = () => {
   const [data, setData] = useState({
@@ -32,7 +34,6 @@ const Signup = () => {
 
   const handleSubmit = async event => {
     event.preventDefault();
-    console.log(data.role)
     try {
       let url;
       let userData = {};
@@ -56,8 +57,8 @@ const Signup = () => {
         };
       }
       const {data: res} = await axios.post(url, userData);
+      toast.success(res.message);
       navigate("/login");
-      console.log(res.message);
     } catch (error) {
       if (
         error.response &&
@@ -65,6 +66,7 @@ const Signup = () => {
         error.response.status <= 500
       ) {
         setError(error.response.data.message);
+        toast.error(error.response.data.message);
       }
     }
   };
@@ -82,7 +84,7 @@ const Signup = () => {
         </div>
         <div className={styles.right}>
           <form className={styles.form_container} onSubmit={handleSubmit}>
-            <h1>Inregistrare cont</h1>
+            <h1>Înregistrare cont</h1>
             <div className={styles.role_buttons}>
               <button
                 type="button"
@@ -104,6 +106,7 @@ const Signup = () => {
             </div>
             <RegisterForm handleChange={handleChange} data={data} />
             {error && <div className={styles.error_msg}>{error}</div>}
+            <ToastContainer />
             <button type="submit" className={styles.green_btn}>
               Inregistrare
             </button>

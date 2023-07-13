@@ -9,7 +9,7 @@ const Homepage = () => {
     return (
         <>
           <Helmet>
-            <title>Home</title>
+            <title>Acasă</title>
           </Helmet>
     
          <HomepageView />

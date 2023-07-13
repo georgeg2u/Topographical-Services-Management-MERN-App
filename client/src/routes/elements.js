@@ -9,10 +9,9 @@ const Loadable = Component => props =>
   );
 
 export const AboutPage = Loadable(lazy(() => import('../pages/customer/AboutPage')));
-// export const CareerContactPage = Loadable(lazy(() => import('../pages/career/CareerContactPage')));
-export const ServicesPage = Loadable(
-  lazy(() => import("../pages/customer/ServicesPage"))
-);
-export const Homepage = Loadable(
-  lazy(() => import("../pages/customer/Homepage"))
-);
+export const ContactPage = Loadable(lazy(() => import('../pages/customer/ContactPage')));
+export const ServicesPage = Loadable(lazy(() => import("../pages/customer/ServicesPage")));
+export const Homepage = Loadable(lazy(() => import("../pages/customer/Homepage")));
+
+
+

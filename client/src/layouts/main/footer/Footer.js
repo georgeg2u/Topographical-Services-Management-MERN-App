@@ -36,7 +36,7 @@ export default function Footer() {
 
   const renderLists = isMdUp ? desktopList : mobileList;
 
-  const isHome = pathname === "/";
+  const isHome = pathname === "/" || pathname === '/company';
 
   const simpleFooter = (
     <Container sx={{py: 8, textAlign: "center"}}>
