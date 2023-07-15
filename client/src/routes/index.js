@@ -13,7 +13,8 @@ import CompanyMainLayout from "../layouts/company-layouts/CompanyMainLayout";
 import UserAccountSettings from "../pages/company/CompanyMySettings";
 import CompanyHomePage from "../pages/company/CompanyHomePage";
 import CompanyMyServices from "../pages/company/CompanyMyServices";
-import CompanyAddServiceView from "../sections/company/view/CompanyAddServiceView";
+import CompanyMyContracts from "../pages/company/CompanyMyContracts";
+import CompanyAddService from "../pages/company/CompanyAddService";
 
 // ----------------------------------------------------------------------
 
@@ -57,11 +58,15 @@ export default function Router() {
         },
         {
           path: "/company/add-service",
-          element: companyUser ? <CompanyAddServiceView /> : <Navigate replace to="/login" />,
+          element: companyUser ? <CompanyAddService /> : <Navigate replace to="/login" />,
         },
         {
           path: "/company/services",
           element: companyUser ? <CompanyMyServices /> : <Navigate replace to="/login" />,
+        },
+        {
+          path: "/company/contracts",
+          element: companyUser ? <CompanyMyContracts /> : <Navigate replace to="/login" />,
         },
         {
           path: "/company/settings",

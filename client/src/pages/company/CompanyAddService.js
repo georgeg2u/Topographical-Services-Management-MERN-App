@@ -1,15 +1,15 @@
 import {Helmet} from "react-helmet-async";
-import CompanyMyServicesView from "../../sections/company/view/CompanyMyServicesView";
+import CompanyAddServiceView from "../../sections/company/view/CompanyAddServiceView";
 
-const CompanyMyServices = () => {
+const CompanyAddService = () => {
   return (
     <>
       <Helmet>
         <title>Adaugă serviciu</title>
       </Helmet>
-      <CompanyMyServicesView />
+      <CompanyAddServiceView />
     </>
   );
 };
 
-export default CompanyMyServices;
+export default CompanyAddService;

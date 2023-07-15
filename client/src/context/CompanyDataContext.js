@@ -7,7 +7,7 @@ export const CompanyDataProvider = ({children}) => {
   const [denumire, setDenumire] = useState("-");
   const [email, setEmail] = useState("-");
   const [cui, setCui] = useState("");
-  const [logo, setLogo] = useState("");
+  const [logo, setLogo] = useState("/assets/images/company/unknown-person.png");
   const [_id, setId] = useState(null);
 
   useEffect(() => {

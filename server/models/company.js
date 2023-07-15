@@ -39,6 +39,7 @@ const validateCompany = data => {
     cui: Joi.string().required().label("Cod unic de identificare"),
     email: Joi.string().email().required().label("Email"),
     password: passwordComplexity().required().label("Password"),
+    logo: Joi.string().label("logo"),
   });
   return schema.validate(data);
 };

@@ -14,6 +14,7 @@ const Signup = () => {
     password: "",
     denumire: "",
     cui: "",
+    logo: "/assets/images/company/unknown-person.png"
   });
 
   const [error, setError] = useState("");
@@ -54,6 +55,7 @@ const Signup = () => {
           cui: data.cui,
           email: data.email,
           password: data.password,
+          logo: data.logo,
         };
       }
       const {data: res} = await axios.post(url, userData);

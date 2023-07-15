@@ -12,6 +12,8 @@ import {
   ServiceDetailsSummary,
   //   ServiceDetailsCompanySimilar,
 } from "../service/details/";
+import { CustomerDataProvider } from "../../../context/CustomerDataContext";
+
 
 // ----------------------------------------------------------------------
 
@@ -34,33 +36,37 @@ export default function ServicePageView({data}) {
 
   return (
     <>
-      <ServiceDetailsHero serviceData={data} />
+      <CustomerDataProvider >
 
-      <Container
-        sx={{
-          overflow: "hidden",
-          pt: {xs: 5, md: 10},
-          pb: 10,
-        }}
-      >
-        <Grid container spacing={{xs: 5, md: 8}}>
-          {!isMdUp && (
-            <Grid xs={12} md={5} lg={4}>
-              <ServiceDetailsInfo serviceData={data} />
+
+        <ServiceDetailsHero serviceData={data} />
+
+        <Container
+          sx={{
+            overflow: "hidden",
+            pt: {xs: 5, md: 10},
+            pb: 10,
+          }}
+        >
+          <Grid container spacing={{xs: 5, md: 8}}>
+            {!isMdUp && (
+              <Grid xs={12} md={5} lg={4}>
+                <ServiceDetailsInfo serviceData={data} />
+              </Grid>
+            )}
+
+            <Grid xs={12} md={7} lg={8}>
+              <ServiceDetailsSummary serviceData={data} />
             </Grid>
-          )}
 
-          <Grid xs={12} md={7} lg={8}>
-            <ServiceDetailsSummary serviceData={data} />
+            <Grid xs={12} md={5} lg={4}>
+              <Stack spacing={5}>
+                {isMdUp && <ServiceDetailsInfo serviceData={data} />}
+              </Stack>
+            </Grid>
           </Grid>
-
-          <Grid xs={12} md={5} lg={4}>
-            <Stack spacing={5}>
-              {isMdUp && <ServiceDetailsInfo serviceData={data} />}
-            </Stack>
-          </Grid>
-        </Grid>
-      </Container>
+        </Container>
+        </CustomerDataProvider>
     </>
   );
 }

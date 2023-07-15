@@ -261,7 +261,7 @@ const CompanyAddServiceView = () => {
         <Typography>Documente necesare:</Typography>
         <Box sx={{display: "flex"}}>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={3}>
+            <Grid item xs={12} sm={4}>
               <FormControlLabel
                 control={
                   <Checkbox
@@ -276,7 +276,7 @@ const CompanyAddServiceView = () => {
                 label="Actul de proprietate al imobilului"
               />
             </Grid>
-            <Grid item xs={12} sm={3}>
+            <Grid item xs={12} sm={4}>
               <FormControlLabel
                 control={
                   <Checkbox
@@ -291,7 +291,7 @@ const CompanyAddServiceView = () => {
                 label="Actele de identitate ale proprietarilor"
               />
             </Grid>
-            <Grid item xs={12} sm={3}>
+            <Grid item xs={12} sm={4}>
               <FormControlLabel
                 control={
                   <Checkbox
@@ -304,21 +304,6 @@ const CompanyAddServiceView = () => {
                   />
                 }
                 label="Certificat fiscal"
-              />
-            </Grid>
-            <Grid item xs={12} sm={3}>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    name="documents"
-                    value="Extras de carte funciară"
-                    checked={serviceData.documents.includes(
-                      "Extras de carte funciară"
-                    )}
-                    onChange={handleCheckboxChange}
-                  />
-                }
-                label="Extras de carte funciară"
               />
             </Grid>
           </Grid>

@@ -13,8 +13,6 @@ import {
 // utils
 import {bgGradient} from "../../../utils/cssStyles";
 import {fShortenNumber} from "../../../utils/formatNumber";
-// _mock
-
 // hooks
 import useResponsive from "../../../hooks/useResponsive";
 // assets

@@ -26,12 +26,12 @@ router.get("/:id", async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
-    const serviceData = req.body; // Obține datele serviciului din corpul cererii
+    const serviceData = req.body; 
 
-    // Creează o instanță a modelului Service cu datele primite
+    
     const newService = new Service(serviceData);
 
-    // Salvează noul serviciu în baza de date
+
     await newService.save();
 
     res.status(201).json({ message: "Service created successfully", service: newService });

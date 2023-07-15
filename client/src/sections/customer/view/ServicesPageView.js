@@ -1,9 +1,5 @@
 import {useState, useEffect, useRef} from "react";
-// @mui
 import {Container} from "@mui/material";
-// _mock
-// import { _jobs } from '../../../_mock/arrays/_jobs';
-//
 import {ServicesList} from "../service/list";
 import ServiceFilters from "../service/filters/ServiceFilters";
 import axios from "axios";

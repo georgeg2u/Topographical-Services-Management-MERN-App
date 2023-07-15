@@ -2,6 +2,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import FolderIcon from '@mui/icons-material/Folder';
 import CreateNewFolderIcon from '@mui/icons-material/CreateNewFolder';
+import PendingActionsIcon from '@mui/icons-material/PendingActions';
 export const mainNavbarItems = [
     {
         id: 0,
@@ -20,6 +21,12 @@ export const mainNavbarItems = [
         icon: <FolderIcon />,
         label: 'Serviciile mele',
         route: 'company/services',
+    },
+    {
+        id: 4,
+        icon: <PendingActionsIcon />,
+        label: 'Contractele mele',
+        route: 'company/contracts',
     },
     {
         id: 3,
