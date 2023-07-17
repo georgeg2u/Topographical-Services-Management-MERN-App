@@ -126,7 +126,7 @@ router.post("/final-upload/:serviceId", async (req, res) => {
     }
     await contract.save();
 
-    res.status(200).json({ message: "Serviciul finalizat a fost trimis catre client!", contract });
+    res.status(200).json({ message: "Contractul a fost trimis catre client!", contract });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal Server Error" });

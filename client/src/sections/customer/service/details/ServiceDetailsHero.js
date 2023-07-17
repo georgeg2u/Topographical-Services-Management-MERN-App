@@ -94,15 +94,14 @@ export default function ServiceDetailsHero({serviceData}) {
         }
         if (data.status === "accepted" && data.finalServiceDocument) {
           setIsFinalServiceUploaded(true);
-          setFinalServiceData(data.finalServiceDocument)
+          setFinalServiceData(data.finalServiceDocument);
         }
       } catch (error) {
         throw new Error("Could not fetch details for selected service");
       }
     }
     fetchContractData();
-  }, [_id,contextEmail]);
-
+  }, [_id, contextEmail]);
 
   const handleClick = () => {
     setIsModalOpen(true);
@@ -121,8 +120,8 @@ export default function ServiceDetailsHero({serviceData}) {
 
     if (fileExtension !== "pdf") {
       const updatedSuccessAlerts = [...successAlerts];
-      updatedSuccessAlerts[fileIndex] = false; 
-      updatedSuccessAlerts[3] = true; 
+      updatedSuccessAlerts[fileIndex] = false;
+      updatedSuccessAlerts[3] = true;
       setSuccessAlerts(updatedSuccessAlerts);
       return;
     }
@@ -133,7 +132,7 @@ export default function ServiceDetailsHero({serviceData}) {
 
     const updatedSuccessAlerts = [...successAlerts];
     updatedSuccessAlerts[fileIndex] = true;
-    updatedSuccessAlerts[3] = false; 
+    updatedSuccessAlerts[3] = false;
     setSuccessAlerts(updatedSuccessAlerts);
   };
 
@@ -236,7 +235,7 @@ export default function ServiceDetailsHero({serviceData}) {
             sx={{width: 1, maxWidth: 340}}
           >
             <Stack spacing={2} alignItems="center" sx={{width: 1}}>
-              {!isContractAccepted && (
+              {!isContractAccepted ? (
                 <Button
                   fullWidth
                   variant="contained"
@@ -248,20 +247,21 @@ export default function ServiceDetailsHero({serviceData}) {
                     ? "Alege serviciul"
                     : "Cererea a fost trimisă catre companie."}
                 </Button>
+              ) : (
+                isContractAccepted && (
+                  <Stack spacing={2} alignItems="center" sx={{width: 1}}>
+                    <Button
+                      fullWidth
+                      variant="contained"
+                      size="large"
+                      onClick={handleClick}
+                    >
+                      Încarcă documente
+                    </Button>
+                  </Stack>
+                )
               )}
-              {isContractAccepted  && (
-                <Stack spacing={2} alignItems="center" sx={{width: 1}}>
-                  <Button
-                    fullWidth
-                    variant="contained"
-                    size="large"
-                    onClick={handleClick}
-                  >
-                    Încarcă documente
-                  </Button>
-                </Stack>
-              )}
-               {isFinalServiceUploaded && (
+              {isFinalServiceUploaded && (
                 <Stack spacing={2} alignItems="center" sx={{width: 1}}>
                   <Button
                     fullWidth
@@ -269,7 +269,7 @@ export default function ServiceDetailsHero({serviceData}) {
                     size="large"
                     onClick={() => handleDownloadDocument(finalServiceData)}
                   >
-                    Vizualizează serviciul finalizat
+                    Vizualizează contractul
                   </Button>
                 </Stack>
               )}
@@ -279,7 +279,7 @@ export default function ServiceDetailsHero({serviceData}) {
       </Container>
       <Dialog open={isModalOpen} onClose={handleCloseModal}>
         <DialogTitle>
-          Încarcă documentele necesare pentru finalizarea serviciului
+          Încarcă documentele necesare
         </DialogTitle>
         <DialogContent>
           <Stack spacing={2}>

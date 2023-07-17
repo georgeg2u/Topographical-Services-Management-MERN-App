@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 // @mui
 import {
@@ -17,26 +17,25 @@ import { fDate } from '../../../../../src/utils/formatTime';
 import Image from '../../../../../src/components/image';
 import Iconify from '../../../../../src/components/iconify';
 import TextMaxLine from '../../../../components/text-max-line';
+import CustomerDataContext from '../../../../context/CustomerDataContext';
 
 // ----------------------------------------------------------------------
 
 export default function ServiceItem({ job }) {
   const {
+    _id,
     title,
     duration,
     price,
     location,
     createdAt,
-    favorited,
     companyName,
     companyLogo,
   } = job;
 
-  const [favorite, setFavorite] = useState(favorited);
+  const [favorite, setFavorite] = useState(false);
 
-  const handleChangeFavorite = (event) => {
-    setFavorite(event.target.checked);
-  };
+  
 
   const durationHandler = (duration) => {
       let selectedDuration = duration
@@ -47,6 +46,30 @@ export default function ServiceItem({ job }) {
     }
     return selectedDuration
   }
+
+  const {
+    email: contextEmail,
+  } = useContext(CustomerDataContext);
+
+  useEffect(() => {
+    async function fetchContractData() {
+      try {
+        const response = await fetch(
+          `http://localhost:8080/api/contracts/${_id}`
+        );
+        if (!response.ok) {
+          return;
+        }
+        const { status, customerEmail } = await response.json();
+        if (status === "accepted" && customerEmail === contextEmail) {
+          setFavorite(true);
+        }
+      } catch (error) {
+        throw new Error("Could not fetch details for selected service");
+      }
+    }
+    fetchContractData();
+  }, [_id,contextEmail]);
 
   return (
     <Card
@@ -59,7 +82,6 @@ export default function ServiceItem({ job }) {
       <Checkbox
         color="error"
         checked={favorite}
-        onChange={handleChangeFavorite}
         icon={<Iconify icon="carbon:favorite" />}
         checkedIcon={<Iconify icon="carbon:favorite-filled" />}
         sx={{ position: 'absolute', right: 16, top: 16 }}

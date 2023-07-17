@@ -243,7 +243,7 @@ const MyContractItem = ({contract, onContractRefused}) => {
                   sx={{bgcolor: "#0000FF", color: "#FFF"}}
                   onClick={handleUploadService}
                 >
-                  Incarcă serviciul finalizat
+                  Incarcă contractul
                 </Button>
               </Grid>
             </Grid>
@@ -348,7 +348,7 @@ const MyContractItem = ({contract, onContractRefused}) => {
         >
           <DialogContent>
             <Typography variant="h6" component="div">
-              Încarcă documentația serviciului finalizat
+              Încarcă contractul de colaborare
             </Typography>
             <Box
               sx={{
@@ -395,7 +395,7 @@ const MyContractItem = ({contract, onContractRefused}) => {
                 onClick={handleUpload}
                 disabled={!selectedFile}
               >
-                Incarcă serviciul finalizat
+                Trimite contractul clientului
               </Button>
             </Grid>
           </Grid>

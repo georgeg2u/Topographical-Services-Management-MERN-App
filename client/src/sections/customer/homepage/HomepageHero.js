@@ -144,7 +144,7 @@ export default function HomepageHero() {
                 </Button>
               </StyledBar>
 
-              <SummarySection />
+              {/* <SummarySection /> */}
             </Stack>
           </Grid>
 

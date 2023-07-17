@@ -32,7 +32,7 @@ export default function ServiceDetailsSummary({serviceData}) {
       {/* -- Location Map --- */}
       <div>
         <Typography variant="h5" sx={{mb: 3}}>
-          Location
+          Locație
         </Typography>
 
         <ContactMap
