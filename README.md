@@ -6,6 +6,8 @@ Welcome to the Land Services Management Web Application repository! This applica
 
 Watch a video demonstration of the project on [YouTube](https://www.youtube.com/watch?v=hXNFyOkxqkI), or watch it here on GitHub:
 
+https://github.com/georgeg2u/Topographical-Services-Management-MERN-App/assets/79796049/cc02f1ee-9d33-43cd-8369-01ba302a078b
+
 ## Overview
 
 The presented solution is a web application for managing land services that caters to both clients and providers of cadastral services. It serves as a collaborative platform where these two entities can work together to successfully complete a service.
