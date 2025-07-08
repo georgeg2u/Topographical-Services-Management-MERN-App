@@ -47,7 +47,7 @@ export default function Footer() {
         component="div"
         sx={{color: "text.secondary"}}
       >
-        © 2023. Toate drepturile rezervate.
+        © 2025. Toate drepturile rezervate.
       </Typography>
     </Container>
   );
@@ -125,7 +125,7 @@ export default function Footer() {
           sx={{py: 3, textAlign: "center"}}
         >
           <Typography variant="caption" sx={{color: "text.secondary"}}>
-            © 2023. Toate drepturile rezervate.
+            © 2025. Toate drepturile rezervate.
           </Typography>
 
           <Stack direction="row" spacing={3} justifyContent="center">
