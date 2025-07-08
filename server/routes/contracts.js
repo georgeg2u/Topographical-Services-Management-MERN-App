@@ -1,6 +1,12 @@
-const Contract = require("../models/contract");
-
 const router = require("express").Router();
+const Contract = require("../models/contract");
+const OpenAI = require("openai");
+const pdfParse = require("pdf-parse");
+
+
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
 
 router.post("/", async (req, res) => {
   try {
@@ -103,13 +109,13 @@ router.post("/upload/:serviceId", async (req, res) => {
     }
 
     await contract.save();
-
     res.status(200).json({ message: "Documentele au fost încărcate cu succes!", contract });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal Server Error" });
   }
 });
+
 
 router.post("/final-upload/:serviceId", async (req, res) => {
   try {
@@ -132,6 +138,55 @@ router.post("/final-upload/:serviceId", async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 });
+
+
+router.post("/verify-property", async (req, res) => {
+  try {
+    const { file, documentType } = req.body;
+
+    if (!file || documentType !== "property") {
+      return res.status(400).json({ message: "Date lipsă sau tip greșit." });
+    }
+
+    const buffer = Buffer.from(file, "base64");
+    const pdfData = await pdfParse(buffer);
+    const extractedText = pdfData.text;
+
+    console.log("Text extras din actul de proprietate:\n", extractedText);
+
+    const prompt = `
+Ai extras textul dintr-un posibil act de proprietate al unui imobil.
+
+Verifică următoarele aspecte esențiale:
+- ✅ Este menționat clar numele complet al proprietarului?
+- ✅ Este specificată adresa completă a imobilului?
+- ✅ Apare termenul "act de proprietate", "contract de vânzare" sau ceva similar?
+- ✅ Există semnături sau referiri la autentificare notarială?
+- ✅ Data semnării este prezentă?
+
+Răspunde în română, pe linii separate cu simboluri clare:
+✅ dacă este prezent și corect  
+⚠️ dacă lipsește sau este incomplet
+
+Textul documentului:
+"""
+${extractedText}
+"""`;
+
+    const aiResponse = await openai.chat.completions.create({
+      model: "gpt-3.5-turbo",
+      messages: [{ role: "user", content: prompt }],
+    });
+
+    const feedback = aiResponse.choices[0].message.content;
+    res.json({ feedback });
+  } catch (error) {
+    console.error("Eroare la verificarea actului de proprietate:", error);
+    res.status(500).json({ message: "Eroare internă la analiza documentului." });
+  }
+});
+
+
 
 
 

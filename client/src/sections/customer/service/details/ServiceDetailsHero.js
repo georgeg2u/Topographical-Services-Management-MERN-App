@@ -48,6 +48,11 @@ export default function ServiceDetailsHero({serviceData}) {
   const [isFinalServiceUploaded, setIsFinalServiceUploaded] = useState(false);
   const [finalServiceData, setFinalServiceData] = useState([]);
 
+
+const [verifying, setVerifying] = useState(false);
+  const [aiFeedback, setAiFeedback] = useState("");
+
+
   const {
     firstName: contextFirstName,
     lastName: contextLastName,
@@ -188,6 +193,29 @@ export default function ServiceDetailsHero({serviceData}) {
 
     window.open(url, "_blank");
   };
+const handleVerifyProperty = async index => {
+  setVerifying(true);
+  setAiFeedback("");
+  try {
+    const file = selectedFiles[index];
+    if (!file) return;
+
+    const base64 = await getBase64String(file);
+
+    const { data } = await axios.post("http://localhost:8080/api/contracts/verify-property", {
+      file: base64,
+      documentType: "property",
+    });
+
+    setAiFeedback(data.feedback);
+  } catch (error) {
+    toast.error("Eroare la verificarea actului de proprietate.");
+  } finally {
+    setVerifying(false);
+  }
+};
+
+
 
   return (
     <StyledRoot>
@@ -277,82 +305,108 @@ export default function ServiceDetailsHero({serviceData}) {
           </Stack>
         </Stack>
       </Container>
-      <Dialog open={isModalOpen} onClose={handleCloseModal}>
-        <DialogTitle>
-          Încarcă documentele necesare
-        </DialogTitle>
-        <DialogContent>
-          <Stack spacing={2}>
-            <Button
-              variant="contained"
-              startIcon={<CloudUpload />}
-              fullWidth
-              component="label"
-            >
-              Actul de proprietate al imobilului
-              <input
-                type="file"
-                style={{display: "none"}}
-                onChange={e => handleFileChange(0, e)}
-              />
-            </Button>
-            {successAlerts[0] && (
-              <Alert severity="success" sx={{mt: 2}}>
-                Documentul a fost încărcat cu succes!
-              </Alert>
-            )}
-            <Button
-              variant="contained"
-              startIcon={<CloudUpload />}
-              fullWidth
-              component="label"
-            >
-              Actul de identitate al proprietarului
-              <input
-                type="file"
-                style={{display: "none"}}
-                onChange={e => handleFileChange(1, e)}
-              />
-            </Button>
-            {successAlerts[1] && (
-              <Alert severity="success" sx={{mt: 2}}>
-                Documentul a fost încărcat cu succes!
-              </Alert>
-            )}
-            <Button
-              variant="contained"
-              startIcon={<CloudUpload />}
-              fullWidth
-              component="label"
-            >
-              Certificatul fiscal eliberat de autoritatea locală.
-              <input
-                type="file"
-                style={{display: "none"}}
-                onChange={e => handleFileChange(2, e)}
-              />
-            </Button>
-            {successAlerts[2] && (
-              <Alert severity="success" sx={{mt: 2}}>
-                Documentul a fost încărcat cu succes!
-              </Alert>
-            )}
-
-            {successAlerts[3] && (
-              <Alert severity="error" sx={{mt: 2}}>
-                Fișierul trebuie să fie de tip PDF.
-              </Alert>
-            )}
-          </Stack>
-        </DialogContent>
-
-        <DialogActions>
-          <Button onClick={handleCloseModal}>Anulează</Button>
-          <Button variant="contained" onClick={handleUpload}>
-            Încarcă
+<Dialog open={isModalOpen} onClose={handleCloseModal}>
+  <DialogTitle>
+    Încarcă documentele necesare
+  </DialogTitle>
+  <DialogContent>
+    <Stack spacing={2}>
+      {/* Act proprietate */}
+      <Button
+        variant="contained"
+        startIcon={<CloudUpload />}
+        fullWidth
+        component="label"
+      >
+        Actul de proprietate al imobilului
+        <input
+          type="file"
+          style={{ display: "none" }}
+          onChange={e => handleFileChange(0, e)}
+        />
+      </Button>
+      {successAlerts[0] && (
+        <>
+          <Alert severity="success" sx={{ mt: 2 }}>
+            Documentul a fost încărcat cu succes!
+          </Alert>
+          <Button
+            variant="outlined"
+            size="small"
+            onClick={() => handleVerifyProperty(0)}
+            disabled={verifying}
+          >
+            {verifying ? "Se verifică..." : "Verifică Act de proprietate"}
           </Button>
-        </DialogActions>
-      </Dialog>
+        </>
+      )}
+
+      {/* Act identitate */}
+      <Button
+        variant="contained"
+        startIcon={<CloudUpload />}
+        fullWidth
+        component="label"
+      >
+        Actul de identitate al proprietarului
+        <input
+          type="file"
+          style={{ display: "none" }}
+          onChange={e => handleFileChange(1, e)}
+        />
+      </Button>
+      {successAlerts[1] && (
+        <Alert severity="success" sx={{ mt: 2 }}>
+          Documentul a fost încărcat cu succes!
+        </Alert>
+      )}
+
+      {/* Certificat fiscal */}
+      <Button
+        variant="contained"
+        startIcon={<CloudUpload />}
+        fullWidth
+        component="label"
+      >
+        Certificatul fiscal eliberat de autoritatea locală.
+        <input
+          type="file"
+          style={{ display: "none" }}
+          onChange={e => handleFileChange(2, e)}
+        />
+      </Button>
+      {successAlerts[2] && (
+        <Alert severity="success" sx={{ mt: 2 }}>
+          Documentul a fost încărcat cu succes!
+        </Alert>
+      )}
+
+      {/* Eroare tip fișier */}
+      {successAlerts[3] && (
+        <Alert severity="error" sx={{ mt: 2 }}>
+          Fișierul trebuie să fie de tip PDF.
+        </Alert>
+      )}
+
+      {/* Feedback AI */}
+      {aiFeedback && (
+        <Alert severity="info" sx={{ whiteSpace: "pre-line" }}>
+          {aiFeedback}
+        </Alert>
+      )}
+    </Stack>
+  </DialogContent>
+
+  <DialogActions>
+    <Button onClick={handleCloseModal}>Anulează</Button>
+    <Button variant="contained" onClick={handleUpload}>
+      Încarcă
+    </Button>
+  </DialogActions>
+</Dialog>
+
+
+
     </StyledRoot>
   );
 }

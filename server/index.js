@@ -10,6 +10,7 @@ const companiesRoutes = require("./routes/companies");
 const searchRoutes = require("./routes/search");
 const contractsRoutes = require("./routes/contracts");
 const bodyParser = require("body-parser");
+const chatRoute = require("./routes/chat");
 
 
 
@@ -32,6 +33,7 @@ app.use("/api/services", serviceRoutes);
 app.use("/api/company/settings", companiesRoutes);
 app.use("/api/company/search", searchRoutes);
 app.use("/api/contracts", contractsRoutes);
+app.use("/api/chat", chatRoute);
 
 const port = process.env.PORT || 8080;
 app.listen(port, () => console.log(`Listening on port ${port}...`));
